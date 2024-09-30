@@ -2,11 +2,12 @@ import SwiftUI
 
 struct CatNeedsView: View {
     var body: some View {
-        VStack(spacing: 30) {
+        VStack(spacing: 20) {
             
             // Header Section
             VStack(alignment: .leading, spacing: 8) {
-                Text("Schedule")
+             Spacer()
+                               Text("Schedule")
                     .font(.system(size: 34, weight: .bold))
                     .foregroundColor(Color.orange)
                 
@@ -27,7 +28,7 @@ struct CatNeedsView: View {
             .frame(maxWidth: .infinity, alignment: .topTrailing)
             
             // Schedule list section
-            VStack(spacing: 20) {
+            VStack(spacing: 24) {
                 
                 // Food Section
                 HStack {
@@ -40,7 +41,7 @@ struct CatNeedsView: View {
                     LabelView(labelText: "Daily")
                     TimeView(timeText: "8:00 AM")
                 }
-                .padding(.horizontal)
+                .padding(15)
                 
                 Divider()
                 
@@ -55,7 +56,7 @@ struct CatNeedsView: View {
                     LabelView(labelText: "Daily")
                     TimeView(timeText: "8:00 AM")
                 }
-                .padding(.horizontal)
+                .padding(15)
                 
                 Divider()
                 
@@ -70,7 +71,7 @@ struct CatNeedsView: View {
                     LabelView(labelText: "Daily")
                     TimeView(timeText: "8:00 AM")
                 }
-                .padding(.horizontal)
+                .padding(15)
                 
                 Divider()
                 
@@ -84,7 +85,7 @@ struct CatNeedsView: View {
                     
                     LabelView(labelText: "June 2020")
                 }
-                .padding(.horizontal)
+                .padding(15)
                 
             }
             .background(
@@ -94,6 +95,7 @@ struct CatNeedsView: View {
             )
             .padding(.horizontal, 20)
             .frame(maxWidth: .infinity)
+            .offset(y:-60)
             
             // Done Button
             Button(action: {}) {
@@ -109,6 +111,7 @@ struct CatNeedsView: View {
             
             Spacer()
         }
+       
         .background(Color(UIColor.systemGray6))
         .edgesIgnoringSafeArea(.all) // Ensures the background stretches edge to edge
     }
