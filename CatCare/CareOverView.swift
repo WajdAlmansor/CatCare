@@ -8,11 +8,41 @@
 import SwiftUI
 
 struct CareOverView: View {
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack{
+           
+    Image("orange normal")
+    .resizable()
+    .scaledToFit()
+    .frame(width: 500, height: 900)
+    .position(x: 200, y: 350)
+            
+            Text(makeAttributedText())
+        .font(.custom("SF Pro Regular", size: 28))
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()   .position(x: 100, y: 104)
+        }
+       
     }
+
+func makeAttributedText() -> AttributedString {
+       var attributedString = AttributedString("Care overview")
+
+       if let range = attributedString.range(of: "Care") {
+           attributedString[range].foregroundColor = .orange
+       }
+
+       if let range = attributedString.range(of: "overview") {
+           attributedString[range].foregroundColor = .black
+       }
+       
+       return attributedString
+   }
 }
+
 
 #Preview {
     CareOverView()
 }
+

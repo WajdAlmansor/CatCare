@@ -9,8 +9,11 @@ struct Task: Identifiable, Codable {
     var frequency: String // Daily or Weekly
 }
 
+
+
 // Main Content View
 struct PerCheck: View {
+    
     @State private var tasks: [Task] = [
         Task(time: "6:00 AM", name: "Feed", isCompleted: true, frequency: "Daily"),
         Task(time: "1:00 PM", name: "Feed", isCompleted: false, frequency: "Daily"),
@@ -23,6 +26,10 @@ struct PerCheck: View {
     
     let daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     
+    /*var body: some View {
+        ZStack{*/
+            
+        //}
     var body: some View {
         NavigationView {
             VStack {
