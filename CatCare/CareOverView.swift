@@ -10,10 +10,20 @@ import SwiftUI
 struct CareOverView: View {
     
     var body: some View {
-        Text(makeAttributedText())
-    .font(.custom("SF Pro Regular", size: 28))
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .padding()   .position(x: 100, y: 104)
+        ZStack{
+           
+    Image("orange normal")
+    .resizable()
+    .scaledToFit()
+    .frame(width: 500, height: 900)
+    .position(x: 200, y: 350)
+            
+            Text(makeAttributedText())
+        .font(.custom("SF Pro Regular", size: 28))
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()   .position(x: 100, y: 104)
+        }
+       
     }
 
 func makeAttributedText() -> AttributedString {
