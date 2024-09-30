@@ -1,18 +1,153 @@
-//
-//  SetSchedule.swift
-//  CatCare
-//
-//  Created by Wajd on 26/03/1446 AH.
-//
-
 import SwiftUI
 
-struct SetSchedule: View {
+struct CatNeedsView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 30) {
+            
+            // Header Section
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Schedule")
+                    .font(.system(size: 34, weight: .bold))
+                    .foregroundColor(Color.orange)
+                
+                Text("your cat needs")
+                    .font(.system(size: 18))
+                    .foregroundColor(.black)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading)
+            
+            // Background abstract shape
+            ZStack {
+                RoundedRectangle(cornerRadius: 50)
+                    .fill(Color.orange.opacity(0.3))
+                    .frame(width: 33, height: 120)
+                    .offset(x: 100, y: -40)
+            }
+            .frame(maxWidth: .infinity, alignment: .topTrailing)
+            
+            // Schedule list section
+            VStack(spacing: 20) {
+                
+                // Food Section
+                HStack {
+                    Text("Food")
+                        .font(.headline)
+                        .foregroundColor(.black)
+                    
+                    Spacer()
+                    
+                    LabelView(labelText: "Daily")
+                    TimeView(timeText: "8:00 AM")
+                }
+                .padding(.horizontal)
+                
+                Divider()
+                
+                // Water Section
+                HStack {
+                    Text("Water")
+                        .font(.headline)
+                        .foregroundColor(.black)
+                    
+                    Spacer()
+                    
+                    LabelView(labelText: "Daily")
+                    TimeView(timeText: "8:00 AM")
+                }
+                .padding(.horizontal)
+                
+                Divider()
+                
+                // Literbox Section
+                HStack {
+                    Text("Literbox")
+                        .font(.headline)
+                        .foregroundColor(.black)
+                    
+                    Spacer()
+                    
+                    LabelView(labelText: "Daily")
+                    TimeView(timeText: "8:00 AM")
+                }
+                .padding(.horizontal)
+                
+                Divider()
+                
+                // Vaccination Section
+                HStack {
+                    Text("Vaccination")
+                        .font(.headline)
+                        .foregroundColor(.black)
+                    
+                    Spacer()
+                    
+                    LabelView(labelText: "June 2020")
+                }
+                .padding(.horizontal)
+                
+            }
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color.white)
+                    .shadow(radius: 5)
+            )
+            .padding(.horizontal, 20)
+            .frame(maxWidth: .infinity)
+            
+            // Done Button
+            Button(action: {}) {
+                Text("Done")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.orange)
+                    .cornerRadius(25)
+            }
+            .padding(.horizontal, 80)
+            
+            Spacer()
+        }
+        .background(Color(UIColor.systemGray6))
+        .edgesIgnoringSafeArea(.all) // Ensures the background stretches edge to edge
     }
 }
 
-#Preview {
-    SetSchedule()
+struct LabelView: View {
+    var labelText: String
+    
+    var body: some View {
+        Text(labelText)
+            .font(.caption)
+            .fontWeight(.medium)
+            .foregroundColor(.orange)
+            .padding(.vertical, 5)
+            .padding(.horizontal, 12)
+            .background(Color.orange.opacity(0.1))
+            .cornerRadius(10)
+    }
+}
+
+struct TimeView: View {
+    var timeText: String
+    
+    var body: some View {
+        Text(timeText)
+            .font(.caption)
+            .fontWeight(.medium)
+            .foregroundColor(.orange)
+            .padding(.vertical, 5)
+            .padding(.horizontal, 12)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.orange, lineWidth: 1)
+            )
+    }
+}
+
+struct CatNeedsView_Previews: PreviewProvider {
+    static var previews: some View {
+        CatNeedsView()
+    }
 }
