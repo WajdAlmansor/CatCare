@@ -26,10 +26,10 @@ struct PerCheck: View {
     
     let daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     
-    var body: some View {
-        ZStack{
+    /*var body: some View {
+        ZStack{*/
             
-        }
+        //}
     var body: some View {
         NavigationView {
             VStack {
