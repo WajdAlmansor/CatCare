@@ -22,97 +22,104 @@ struct PerCheck: View {
     
     var body: some View {
         NavigationView {
-            ZStack{
-                Color(.systemGray6) // Background color
-                    .ignoresSafeArea()
+           /* ZStack{
+                Image("background")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 250, height: 900)
+                    .position(x: 200, y: 350)*/
                 
-                ZStack {
-                    // Background image or color
-                    Image("OneBack")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 300, height: 500)
-                        .position(x: 280, y: 30)
+                ZStack{
+                    Color(.systemGray6) // Background color
+                        .ignoresSafeArea()
                     
-                    VStack {
-                        // Day Picker (Sun to Sat)
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 5) {
-                                ForEach(daysOfWeek, id: \.self) { day in
-                                    let dayName = getDayName(for: day)
-                                    let dayOfMonth = getDayOfMonth(for: day)
-                                    VStack {
-                                        Text(dayName)
-                                            .font(.caption)
-                                        Text(dayOfMonth)
-                                            .font(.title)
-                                            .padding()
-                                            .background(dayName == selectedDay ? Color.orange : Color.clear)
-                                            .clipShape(Circle())
-                                    }
-                                    .onTapGesture {
-                                        selectedDay = dayName
+                    ZStack {
+                        // Background image or color
+                        Image("background")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 300, height: 500)
+                            .position(x: 280, y: 30)
+                        
+                        VStack {
+                            // Day Picker (Sun to Sat)
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 5) {
+                                    ForEach(daysOfWeek, id: \.self) { day in
+                                        let dayName = getDayName(for: day)
+                                        let dayOfMonth = getDayOfMonth(for: day)
+                                        VStack {
+                                            Text(dayName)
+                                                .font(.caption)
+                                            Text(dayOfMonth)
+                                                .font(.title)
+                                                .padding()
+                                                .background(dayName == selectedDay ? Color.orange : Color.clear)
+                                                .clipShape(Circle())
+                                        }
+                                        .onTapGesture {
+                                            selectedDay = dayName
+                                        }
                                     }
                                 }
+                                .padding()
                             }
-                            .padding()
-                        }
-                        
-                        // Main content with white rectangle background
-                        VStack(alignment: .leading, spacing: 10) {
-                            // Header for time and task
-                            HStack {
-                                Text("Time")
-                                    .font(.headline)
-                                    .foregroundColor(.gray)
-                                    .frame(width: 80, alignment: .leading) // Same width as time column
-                                
-                                Text("Task")
-                                    .font(.headline)
-                                    .foregroundColor(.gray)
-                                Spacer()
-                            }
-                            .padding(.horizontal)
                             
-                            // Task List inside the white rounded rectangle
+                            // Main content with white rectangle background
                             VStack(alignment: .leading, spacing: 10) {
-                                ForEach($tasks) { $task in
-                                    TaskView(task: $task, tasks: $tasks)
+                                // Header for time and task
+                                HStack {
+                                    Text("Time")
+                                        .font(.headline)
+                                        .foregroundColor(.gray)
+                                        .frame(width: 80, alignment: .leading) // Same width as time column
+                                    
+                                    Text("Task")
+                                        .font(.headline)
+                                        .foregroundColor(.gray)
+                                    Spacer()
                                 }
+                                .padding(.horizontal)
+                                
+                                // Task List inside the white rounded rectangle
+                                VStack(alignment: .leading, spacing: 10) {
+                                    ForEach($tasks) { $task in
+                                        TaskView(task: $task, tasks: $tasks)
+                                    }
+                                }
+                                .padding()
+                                .background(Color.white) // White background for the task list
+                                .cornerRadius(20) // Rounded corners
+                                .shadow(radius: 5) // Add shadow effect
                             }
-                            .padding()
-                            .background(Color.white) // White background for the task list
-                            .cornerRadius(20) // Rounded corners
-                            .shadow(radius: 5) // Add shadow effect
+                            .padding(.horizontal) // Padding for overall layout
+                            
+                            Spacer()
                         }
-                        .padding(.horizontal) // Padding for overall layout
-                        
-                        Spacer()
+                        .padding(.vertical) // Padding for content area
                     }
-                    .padding(.vertical) // Padding for content area
                 }
-            }
-            .navigationBarItems(
-                leading: HStack {
-                    Image(systemName: "pawprint.fill") // Replace with your asset or a static cat icon
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                        .clipShape(Circle())
-                    Text("Pinky")
-                        .font(.title)
-                },
-                trailing: Button("Edit") {
-                    isEditing.toggle()
+                .navigationBarItems(
+                    leading: HStack {
+                        Image(systemName: "pawprint.fill") // Replace with your asset or a static cat icon
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                            .clipShape(Circle())
+                        Text("Pinky")
+                            .font(.title)
+                    },
+                    trailing: Button("Edit") {
+                        isEditing.toggle()
+                    }
+                )
+                .navigationBarTitleDisplayMode(.inline)
+                .onAppear(perform: loadTasks)
+                .sheet(isPresented: $isEditing) {
+                    // You can implement an edit view here if needed
+                    Text("Edit Tasks")
                 }
-            )
-            .navigationBarTitleDisplayMode(.inline)
-            .onAppear(perform: loadTasks)
-            .sheet(isPresented: $isEditing) {
-                // You can implement an edit view here if needed
-                Text("Edit Tasks")
-            }
-        }
-    }
+            
+        }}
     
     // Function to get the day name (e.g., "Sun", "Mon", "Tue", etc.)
     func getDayName(for date: Date) -> String {
