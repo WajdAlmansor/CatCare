@@ -10,7 +10,7 @@ struct PerCheck: View {
     ]
     
     @State private var isEditing = false
-    @State private var selectedDay = "Thu" // Example selected day
+    @State private var selectedDay = "Mon" // Example selected day
 
     // Fixed date to start the week (September 30, 2024)
     let startDate = Calendar.current.date(from: DateComponents(year: 2024, month: 9, day: 30))!
@@ -22,16 +22,17 @@ struct PerCheck: View {
     
     var body: some View {
         NavigationView {
-           /* ZStack{
-                Image("background")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 250, height: 900)
-                    .position(x: 200, y: 350)*/
-                
-                ZStack{
-                    Color(.systemGray6) // Background color
-                        .ignoresSafeArea()
+            /* ZStack{
+             Image("background")
+             .resizable()
+             .scaledToFit()
+             .frame(width: 250, height: 900)
+             .position(x: 200, y: 350)*/
+            
+            ZStack{
+                Color("backgroundGray") // Background color
+            .ignoresSafeArea()
+                    
                     
                     ZStack {
                         // Background image or color
@@ -49,14 +50,23 @@ struct PerCheck: View {
                                         let dayName = getDayName(for: day)
                                         let dayOfMonth = getDayOfMonth(for: day)
                                         VStack {
+                                            
                                             Text(dayName)
                                                 .font(.caption)
+                                                //.alignmentGuide(.bottom) { d in d[.bottom] + 100 }
+                                                .offset(y: 26) // Offset the day name as needed
+//                                                .zIndex(1) // Ensure the day name stays above the background
+
                                             Text(dayOfMonth)
                                                 .font(.callout)
                                                 .padding()
                                                 .background(dayName == selectedDay ? Color.orange : Color.clear)
                                                 .clipShape(Circle())
+                                                //.alignmentGuide(.bottom) { d in d[.bottom] + 50 }
+                                                .offset(y: 18) // Offset the day number
+                                                /*.zIndex(1)*/ // Ensure the day number stays above the background
                                         }
+                                        
                                         .onTapGesture {
                                             selectedDay = dayName
                                         }
@@ -64,25 +74,49 @@ struct PerCheck: View {
                                 }
                                 .padding()
                             }
+
                             
+                            
+                            
+                            
+                            HStack {
+                                Text("Time")
+                                    .font(.headline)
+                                    .foregroundColor(.gray)
+                                    .frame(width: 80, alignment: .leading)
+                                    .offset(y: 120) // Move text down without affecting other elements
+
+                                Text("Task")
+                                    .font(.headline)
+                                    .foregroundColor(.gray)
+                                    .offset(y: 120) // Move text down without affecting other elements
+
+                                Spacer()
+                            }
+                            .padding(.horizontal)
                             // Main content with white rectangle background
-                            VStack(alignment: .leading, spacing: 10) {
+                            VStack/*(alignment: .leading, spacing: 60)*/ {
                                 // Header for time and task
-                                HStack {
-                                    Text("Time")
-                                        .font(.headline)
-                                        .foregroundColor(.gray)
-                                        .frame(width: 80, alignment: .leading) // Same width as time column
-                                    
-                                    Text("Task")
-                                        .font(.headline)
-                                        .foregroundColor(.gray)
-                                    Spacer()
-                                }
-                                .padding(.horizontal)
+//                                HStack {
+//                                    Text("Time")
+//                                        .font(.headline)
+//                                        .foregroundColor(.gray)
+//                                        .frame(width: 80, alignment: .leading)
+//                                        .offset(y: 60) // Move text down without affecting other elements
+//
+//                                    Text("Task")
+//                                        .font(.headline)
+//                                        .foregroundColor(.gray)
+//                                        .offset(y: 60) // Move text down without affecting other elements
+//
+//                                    Spacer()
+//                                }
+//                                .padding(.horizontal)
+
+
                                 
                                 // Task List inside the white rounded rectangle
-                                VStack(alignment: .leading, spacing: 10) {
+                                VStack(alignment: .leading, spacing: -150) {
                                     ForEach($tasks) { $task in
                                         TaskView(task: $task, tasks: $tasks)
                                     }
@@ -96,14 +130,16 @@ struct PerCheck: View {
                                 .cornerRadius(45) // Rounded corners
                                 .shadow(radius: 1) // Add shadow effect
                                 .frame(maxHeight: .infinity)
-                               //.frame(width: 390)
+                                .position(x:180,y:400)
+                                //.frame(width: 400)
                             }
                             .padding(.horizontal) // Padding for overall layout
-                            .padding(.bottom, -100)
+                            //.padding(.bottom, -50)
                           //  Spacer()
                         }
                         //.padding(.vertical) // Padding for content area
                     }
+                        
                 }
                 .navigationBarItems(
                     leading: HStack {
@@ -113,10 +149,13 @@ struct PerCheck: View {
                             .clipShape(Circle())
                         Text("Pinky")
                             .font(.title)
+                            
                     },
                     trailing: Button("Edit") {
                         isEditing.toggle()
+                        
                     }
+                    
                 )
                 .navigationBarTitleDisplayMode(.inline)
                 .onAppear(perform: loadTasks)
@@ -194,6 +233,8 @@ struct TaskView: View {
                     Spacer()
                     
                     Image(systemName: task.isCompleted ? "pawprint.fill" : "pawprint")
+                        .resizable() // Make the image resizable
+                        .frame(width: 40, height: 40)
                         .foregroundColor(task.isCompleted ? .gray : .orange)
                         .onTapGesture {
                             task.isCompleted.toggle() // Toggle completion status
