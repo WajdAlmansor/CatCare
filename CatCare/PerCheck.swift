@@ -66,7 +66,7 @@ struct PerCheck: View {
                                     .font(.headline)
                                     .foregroundColor(.gray)
                                     .frame(width: 80, alignment: .leading) // Same width as time column
-                                Spacer()
+                                
                                 Text("Task")
                                     .font(.headline)
                                     .foregroundColor(.gray)
