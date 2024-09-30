@@ -19,11 +19,18 @@ struct CatNeedsView: View {
             .padding(.leading)
             
             // Background abstract shape
+            
             ZStack {
-                RoundedRectangle(cornerRadius: 50)
+                Image("orange normal")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 500, height: 10011)
+                .position(x: 200, y: 350)
+                
+                /*RoundedRectangle(cornerRadius: 50)
                     .fill(Color.orange.opacity(0.3))
                     .frame(width: 33, height: 120)
-                    .offset(x: 100, y: -40)
+                    .offset(x: 100, y: -40)*/
             }
             .frame(maxWidth: .infinity, alignment: .topTrailing)
             
