@@ -1,17 +1,5 @@
 import SwiftUI
 
-// Task model
-struct Task: Identifiable, Codable {
-    var id = UUID()
-    var time: String
-    var name: String
-    var isCompleted: Bool
-    var frequency: String // Daily or Weekly
-}
-
-
-
-// Main Content View
 struct PerCheck: View {
     
     @State private var tasks: [Task] = [
@@ -23,46 +11,86 @@ struct PerCheck: View {
     
     @State private var isEditing = false
     @State private var selectedDay = "Thu" // Example selected day
+
+    // Fixed date to start the week (September 30, 2024)
+    let startDate = Calendar.current.date(from: DateComponents(year: 2024, month: 9, day: 30))!
     
-    let daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    // Get the current week starting from the fixed startDate
+    var daysOfWeek: [Date] {
+        return (0..<7).compactMap { Calendar.current.date(byAdding: .day, value: $0, to: startDate) }
+    }
     
-    /*var body: some View {
-        ZStack{*/
-            
-        //}
     var body: some View {
         NavigationView {
-            VStack {
-                // Day Picker (Sun to Sat)
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 5) {
-                        ForEach(daysOfWeek, id: \.self) { day in
-                            VStack {
-                                Text(day)
-                                    .font(.caption)
-                                Text(getDayOfMonth(for: day))
-                                    .font(.title)
-                                    .padding()
-                                    .background(day == selectedDay ? Color.orange : Color.clear)
-                                    .clipShape(Circle())
-                            }
-                            .onTapGesture {
-                                selectedDay = day
-                            }
-                        }
-                    }
-                    .padding()
-                }
-
-                // Task List
-                VStack(alignment: .leading, spacing: 10) {
-                    ForEach($tasks) { $task in
-                        TaskView(task: $task)
-                    }
-                }
-                .padding()
+            ZStack{
+                Color(.systemGray6) // Background color
+                    .ignoresSafeArea()
                 
-                Spacer()
+                ZStack {
+                    // Background image or color
+                    Image("OneBack")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 300, height: 500)
+                        .position(x: 280, y: 30)
+                    
+                    VStack {
+                        // Day Picker (Sun to Sat)
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 5) {
+                                ForEach(daysOfWeek, id: \.self) { day in
+                                    let dayName = getDayName(for: day)
+                                    let dayOfMonth = getDayOfMonth(for: day)
+                                    VStack {
+                                        Text(dayName)
+                                            .font(.caption)
+                                        Text(dayOfMonth)
+                                            .font(.title)
+                                            .padding()
+                                            .background(dayName == selectedDay ? Color.orange : Color.clear)
+                                            .clipShape(Circle())
+                                    }
+                                    .onTapGesture {
+                                        selectedDay = dayName
+                                    }
+                                }
+                            }
+                            .padding()
+                        }
+                        
+                        // Main content with white rectangle background
+                        VStack(alignment: .leading, spacing: 10) {
+                            // Header for time and task
+                            HStack {
+                                Text("Time")
+                                    .font(.headline)
+                                    .foregroundColor(.gray)
+                                    .frame(width: 80, alignment: .leading) // Same width as time column
+                                Spacer()
+                                Text("Task")
+                                    .font(.headline)
+                                    .foregroundColor(.gray)
+                                Spacer()
+                            }
+                            .padding(.horizontal)
+                            
+                            // Task List inside the white rounded rectangle
+                            VStack(alignment: .leading, spacing: 10) {
+                                ForEach($tasks) { $task in
+                                    TaskView(task: $task, tasks: $tasks)
+                                }
+                            }
+                            .padding()
+                            .background(Color.white) // White background for the task list
+                            .cornerRadius(20) // Rounded corners
+                            .shadow(radius: 5) // Add shadow effect
+                        }
+                        .padding(.horizontal) // Padding for overall layout
+                        
+                        Spacer()
+                    }
+                    .padding(.vertical) // Padding for content area
+                }
             }
             .navigationBarItems(
                 leading: HStack {
@@ -86,16 +114,18 @@ struct PerCheck: View {
         }
     }
     
-    // Function to get the current date number for the day of the week (example logic)
-    func getDayOfMonth(for day: String) -> String {
+    // Function to get the day name (e.g., "Sun", "Mon", "Tue", etc.)
+    func getDayName(for date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "EEE"
-        if let date = formatter.date(from: day) {
-            let dayOfMonthFormatter = DateFormatter()
-            dayOfMonthFormatter.dateFormat = "d"
-            return dayOfMonthFormatter.string(from: date)
-        }
-        return "26" // Return a default value
+        formatter.dateFormat = "EEE" // Day of the week in short form
+        return formatter.string(from: date)
+    }
+    
+    // Function to get the day number (e.g., "26", "27", etc.)
+    func getDayOfMonth(for date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d" // Day of the month
+        return formatter.string(from: date)
     }
     
     // Save tasks to UserDefaults
@@ -117,7 +147,8 @@ struct PerCheck: View {
 // Task View (Row)
 struct TaskView: View {
     @Binding var task: Task
-    
+    @Binding var tasks: [Task] // Pass all tasks for saving
+
     var body: some View {
         HStack(alignment: .top) {
             // Time Column
@@ -153,7 +184,7 @@ struct TaskView: View {
                         .foregroundColor(task.isCompleted ? .gray : .orange)
                         .onTapGesture {
                             task.isCompleted.toggle() // Toggle completion status
-                            saveTasks()
+                            saveTasks() // Save all tasks when toggling
                         }
                 }
             }
@@ -170,15 +201,26 @@ struct TaskView: View {
     
     // Save updated task data
     func saveTasks() {
-        if let encoded = try? JSONEncoder().encode([task]) {
+        if let encoded = try? JSONEncoder().encode(tasks) {
             UserDefaults.standard.set(encoded, forKey: "tasks")
         }
     }
+}
+
+// Task Model
+struct Task: Identifiable, Codable {
+    var id = UUID()
+    var time: String
+    var name: String
+    var isCompleted: Bool
+    var frequency: String // Daily or Weekly
 }
 
 // Preview for SwiftUI canvas
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         PerCheck()
+            .previewDevice("iPhone 15 Pro") // Simulate iPhone 15 Pro preview
     }
 }
+
