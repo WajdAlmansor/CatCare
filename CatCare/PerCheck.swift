@@ -44,7 +44,7 @@ struct PerCheck: View {
                         VStack {
                             // Day Picker (Sun to Sat)
                             ScrollView(.horizontal, showsIndicators: false) {
-                                HStack(spacing: 5) {
+                                HStack(spacing: 10) {
                                     ForEach(daysOfWeek, id: \.self) { day in
                                         let dayName = getDayName(for: day)
                                         let dayOfMonth = getDayOfMonth(for: day)
@@ -52,7 +52,7 @@ struct PerCheck: View {
                                             Text(dayName)
                                                 .font(.caption)
                                             Text(dayOfMonth)
-                                                .font(.title)
+                                                .font(.callout)
                                                 .padding()
                                                 .background(dayName == selectedDay ? Color.orange : Color.clear)
                                                 .clipShape(Circle())
@@ -88,15 +88,21 @@ struct PerCheck: View {
                                     }
                                 }
                                 .padding()
-                                .background(Color.white) // White background for the task list
-                                .cornerRadius(20) // Rounded corners
-                                .shadow(radius: 5) // Add shadow effect
+                                .background{
+                                    Color.white
+                                        .ignoresSafeArea()
+                                    
+                                } // White background for the task list
+                                .cornerRadius(45) // Rounded corners
+                                .shadow(radius: 1) // Add shadow effect
+                                .frame(maxHeight: .infinity)
+                               //.frame(width: 390)
                             }
                             .padding(.horizontal) // Padding for overall layout
-                            
-                            Spacer()
+                            .padding(.bottom, -100)
+                          //  Spacer()
                         }
-                        .padding(.vertical) // Padding for content area
+                        //.padding(.vertical) // Padding for content area
                     }
                 }
                 .navigationBarItems(
