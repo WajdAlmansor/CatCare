@@ -9,6 +9,8 @@ struct Task: Identifiable, Codable {
     var frequency: String // Daily or Weekly
 }
 
+
+
 // Main Content View
 struct PerCheck: View {
     @State private var tasks: [Task] = [
