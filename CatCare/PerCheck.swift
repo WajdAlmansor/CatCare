@@ -18,17 +18,22 @@ struct PerCheck: View {
     // Get the current week starting from the fixed startDate
     var daysOfWeek: [Date] {
         return (0..<7).compactMap { Calendar.current.date(byAdding: .day, value: $0, to: startDate) }
+        
     }
     
     var body: some View {
+       
+        
         NavigationView {
             
             ZStack{
+                
                 Color("backgroundGray") // Background color
             .ignoresSafeArea()
                     
                     
                     ZStack {
+                        
                         // Background image
                         Image("background")
                             .resizable()
@@ -109,7 +114,7 @@ struct PerCheck: View {
                                 .cornerRadius(45) // Rounded corners
                                 .shadow(radius: 1) // Add shadow effect
                                 .frame(maxHeight: .infinity)
-                                .position(x:180,y:300)
+                                .position(x:180,y:200)
                             }
                             .padding(.horizontal)
                             //.padding(.vertical)// Padding for overall layout
@@ -125,21 +130,22 @@ struct PerCheck: View {
             
             
             
-            
                 .navigationBarItems(
                     leading: HStack {
+                        Image(systemName: "chevron.left")
                         Image(systemName: "pawprint.fill")
                             .resizable()
                             .frame(width: 40, height: 40)//size of the paw check
                             .clipShape(Circle())
-                        Text("CatName")
-                            .font(.title)
-                        Text("October")
-                            .font(.subheadline)
-                            .fontWeight(.light)
-                            .frame(width: 30.0, height: 30.0)//ليش الاسم والشهر نقاط
-                            .foregroundStyle(.gray)
-                            .position(x:-90,y:60)
+                        VStack(alignment:.leading){
+                            Text("CatName")
+                                .font(.title)
+//                            Text("October")
+//                                .font(.subheadline)
+//                                .fontWeight(.light)
+//                                .frame(width: 30.0, height: 30.0)//ليش الاسم والشهر نقاط
+//                                .foregroundStyle(.gray)
+                           }
                     },
                     trailing: Button("Edit")
                     {
@@ -147,6 +153,9 @@ struct PerCheck: View {
                     }
                         .foregroundColor(.gray)
                 )
+            
+              
+            
             
             
             
@@ -244,7 +253,7 @@ struct TaskView: View {
                     Image(systemName: task.isCompleted ? "pawprint.fill" : "pawprint")
                         .resizable() // Make the image resizable
                         .frame(width: 40, height: 40)
-                        .foregroundColor(task.isCompleted ? .gray : .orange)
+                        .foregroundColor(task.isCompleted ? .orange : .orange)
                         .onTapGesture {
                             task.isCompleted.toggle() // Toggle completion status
                             saveTasks() // Save all tasks when toggling
