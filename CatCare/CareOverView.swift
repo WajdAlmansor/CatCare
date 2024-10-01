@@ -40,10 +40,13 @@ struct CareOverView: View {
         .overlay(
             
             
-  VStack( spacing: 10) {
-      Text("")
+  VStack( spacing:5) {
+      Text("CatName")
+          .offset(x:-50,y:-10)
+          .foregroundColor(.white)
+          //.font(.system(size: 15))
                                     
-                Text("Food")
+      Text("Food")
        .font(.headline)
   .foregroundColor(.black)
     .frame(maxWidth: .infinity, alignment: .leading)

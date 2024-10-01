@@ -42,10 +42,20 @@ struct PerCheck: View {
                             .position(x: 280, y: 30)
                         
                         VStack {
-                            VStack(content: {
+                            VStack(alignment: .leading, content: {
                                 Text("October")
+                                    .offset(x:-78,y:20)
+                                    .font(.system(size: 20))
+                                    .foregroundColor(.gray)
                                 Text("Today reminders")
+                                    .fontWeight(.light)
+                                    .offset(x:-82)
+                                    .font(.title)
+                                    //.fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                                    .padding(4.0)
+                                    
                             })
+                            //.frame(maxWidth: .infinity, alignment: .leading)
                                 
                             
                             
@@ -59,8 +69,8 @@ struct PerCheck: View {
                                             
                                             Text(dayName)
                                                 .font(.caption)
-                                                .offset(y: 60)
-                                                .padding(.bottom, 60)
+                                                .offset(y: 10)
+                                                .padding(.bottom, 10)
                                                 
 
                                             Text(dayOfMonth)
@@ -89,12 +99,12 @@ struct PerCheck: View {
                                     .foregroundColor(.gray)
                                     .frame(width: 80, alignment: .leading)
                                     .padding(.trailing, 20)// Add space between Time and Task
-                                    .offset(y: -20 ) // 120 Move text down without affecting other elements
+                                    .offset(y: -2 ) // 120 Move text down without affecting other elements
 
                                 Text("Task")
                                     .font(.headline)
                                     .foregroundColor(.gray)
-                                    .offset(y: -20) // 120 Move text down without affecting other elements
+                                    .offset(y: -2) // 120 Move text down without affecting other elements
 
                                 Spacer()
                             }
@@ -147,11 +157,6 @@ struct PerCheck: View {
                         VStack(alignment:.leading){
                             Text("CatName")
                                 .font(.title)
-//                            Text("October")
-//                                .font(.subheadline)
-//                                .fontWeight(.light)
-//                                .frame(width: 30.0, height: 30.0)//ليش الاسم والشهر نقاط
-//                                .foregroundStyle(.gray)
                            }
                     },
                     trailing: Button("Edit")
