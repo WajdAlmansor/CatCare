@@ -42,6 +42,13 @@ struct PerCheck: View {
                             .position(x: 280, y: 30)
                         
                         VStack {
+                            VStack(content: {
+                                Text("October")
+                                Text("Today reminders")
+                            })
+                                
+                            
+                            
                             // Day Picker (Sun to Sat)
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 10) {
@@ -52,8 +59,8 @@ struct PerCheck: View {
                                             
                                             Text(dayName)
                                                 .font(.caption)
-                                                .offset(y: 100)
-                                                .padding(.bottom, 100)
+                                                .offset(y: 60)
+                                                .padding(.bottom, 60)
                                                 
 
                                             Text(dayOfMonth)
@@ -82,12 +89,12 @@ struct PerCheck: View {
                                     .foregroundColor(.gray)
                                     .frame(width: 80, alignment: .leading)
                                     .padding(.trailing, 20)// Add space between Time and Task
-                                    .offset(y: 70 ) // 120 Move text down without affecting other elements
+                                    .offset(y: -20 ) // 120 Move text down without affecting other elements
 
                                 Text("Task")
                                     .font(.headline)
                                     .foregroundColor(.gray)
-                                    .offset(y: 70) // 120 Move text down without affecting other elements
+                                    .offset(y: -20) // 120 Move text down without affecting other elements
 
                                 Spacer()
                             }
@@ -114,7 +121,7 @@ struct PerCheck: View {
                                 .cornerRadius(45) // Rounded corners
                                 .shadow(radius: 1) // Add shadow effect
                                 .frame(maxHeight: .infinity)
-                                .position(x:180,y:200)
+                                .position(x:180,y:230)
                             }
                             .padding(.horizontal)
                             //.padding(.vertical)// Padding for overall layout
