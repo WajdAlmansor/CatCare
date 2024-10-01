@@ -22,12 +22,6 @@ struct PerCheck: View {
     
     var body: some View {
         NavigationView {
-            /* ZStack{
-             Image("background")
-             .resizable()
-             .scaledToFit()
-             .frame(width: 250, height: 900)
-             .position(x: 200, y: 350)*/
             
             ZStack{
                 Color("backgroundGray") // Background color
@@ -35,7 +29,7 @@ struct PerCheck: View {
                     
                     
                     ZStack {
-                        // Background image or color
+                        // Background image
                         Image("background")
                             .resizable()
                             .scaledToFit()
@@ -53,18 +47,16 @@ struct PerCheck: View {
                                             
                                             Text(dayName)
                                                 .font(.caption)
-                                                //.alignmentGuide(.bottom) { d in d[.bottom] + 100 }
-                                                .offset(y: 26) // Offset the day name as needed
-//                                                .zIndex(1) // Ensure the day name stays above the background
+                                                .offset(y: 100)
+                                                .padding(.bottom, 100)
+                                                
 
                                             Text(dayOfMonth)
                                                 .font(.callout)
                                                 .padding()
                                                 .background(dayName == selectedDay ? Color.orange : Color.clear)
-                                                .clipShape(Circle())
-                                                //.alignmentGuide(.bottom) { d in d[.bottom] + 50 }
-                                                .offset(y: 18) // Offset the day number
-                                                /*.zIndex(1)*/ // Ensure the day number stays above the background
+                                                .clipShape(Circle())//orange circle on the current day
+                                              
                                         }
                                         
                                         .onTapGesture {
@@ -84,39 +76,26 @@ struct PerCheck: View {
                                     .font(.headline)
                                     .foregroundColor(.gray)
                                     .frame(width: 80, alignment: .leading)
-                                    .offset(y: 120) // Move text down without affecting other elements
+                                    .padding(.trailing, 20)// Add space between Time and Task
+                                    .offset(y: 70 ) // 120 Move text down without affecting other elements
 
                                 Text("Task")
                                     .font(.headline)
                                     .foregroundColor(.gray)
-                                    .offset(y: 120) // Move text down without affecting other elements
+                                    .offset(y: 70) // 120 Move text down without affecting other elements
 
                                 Spacer()
                             }
                             .padding(.horizontal)
+                            
+                            
+                            
+                            
+                            
+                            
                             // Main content with white rectangle background
-                            VStack/*(alignment: .leading, spacing: 60)*/ {
-                                // Header for time and task
-//                                HStack {
-//                                    Text("Time")
-//                                        .font(.headline)
-//                                        .foregroundColor(.gray)
-//                                        .frame(width: 80, alignment: .leading)
-//                                        .offset(y: 60) // Move text down without affecting other elements
-//
-//                                    Text("Task")
-//                                        .font(.headline)
-//                                        .foregroundColor(.gray)
-//                                        .offset(y: 60) // Move text down without affecting other elements
-//
-//                                    Spacer()
-//                                }
-//                                .padding(.horizontal)
-
-
-                                
-                                // Task List inside the white rounded rectangle
-                                VStack(alignment: .leading, spacing: -150) {
+                            VStack {
+                                VStack(alignment: .leading, spacing: -20/*يسوي المسافه بين التاسكز*/) {
                                     ForEach($tasks) { $task in
                                         TaskView(task: $task, tasks: $tasks)
                                     }
@@ -130,41 +109,62 @@ struct PerCheck: View {
                                 .cornerRadius(45) // Rounded corners
                                 .shadow(radius: 1) // Add shadow effect
                                 .frame(maxHeight: .infinity)
-                                .position(x:180,y:400)
-                                //.frame(width: 400)
+                                .position(x:180,y:300)
                             }
-                            .padding(.horizontal) // Padding for overall layout
+                            .padding(.horizontal)
+                            //.padding(.vertical)// Padding for overall layout
                             //.padding(.bottom, -50)
                           //  Spacer()
                         }
-                        //.padding(.vertical) // Padding for content area
                     }
-                        
                 }
+            
+            
+            
+            
+            
+            
+            
+            
                 .navigationBarItems(
                     leading: HStack {
-                        Image(systemName: "pawprint.fill") // Replace with your asset or a static cat icon
+                        Image(systemName: "pawprint.fill")
                             .resizable()
-                            .frame(width: 40, height: 40)
+                            .frame(width: 40, height: 40)//size of the paw check
                             .clipShape(Circle())
-                        Text("Pinky")
+                        Text("CatName")
                             .font(.title)
-                            
+                        Text("October")
+                            .font(.subheadline)
+                            .fontWeight(.light)
+                            .frame(width: 30.0, height: 30.0)//ليش الاسم والشهر نقاط
+                            .foregroundStyle(.gray)
+                            .position(x:-90,y:60)
                     },
-                    trailing: Button("Edit") {
+                    trailing: Button("Edit")
+                    {
                         isEditing.toggle()
-                        
                     }
-                    
+                        .foregroundColor(.gray)
                 )
+            
+            
+            
                 .navigationBarTitleDisplayMode(.inline)
-                .onAppear(perform: loadTasks)
+                .onAppear(perform: loadTasks)//means that when this view appears on the screen, the loadTasks function will be called, which likely loads saved tasks (from UserDefaults or any other storage) when the view is presented.
                 .sheet(isPresented: $isEditing) {
-                    // You can implement an edit view here if needed
-                    Text("Edit Tasks")
+                    Text("Edit Tasks")//When isEditing is set to true (e.g., by pressing the "Edit" button), a sheet is presented with the text "Edit Tasks." This could later be expanded to allow the user to edit tasks.
                 }
             
         }}
+    
+    
+    
+    
+    
+    
+    
+    
     
     // Function to get the day name (e.g., "Sun", "Mon", "Tue", etc.)
     func getDayName(for date: Date) -> String {
@@ -195,6 +195,15 @@ struct PerCheck: View {
         }
     }
 }
+
+
+
+
+
+
+
+
+
 
 // Task View (Row)
 struct TaskView: View {
@@ -242,11 +251,12 @@ struct TaskView: View {
                         }
                 }
             }
+            
             .padding()
-            .background(Color.orange.opacity(0.2))
-            .cornerRadius(10)
+            .background(Color.orange.opacity(0.3))
+            .cornerRadius(25)//حدود زاوية التاسك
             .overlay(
-                RoundedRectangle(cornerRadius: 10)
+                RoundedRectangle(cornerRadius: 25)//حدود ايطار التاسك البرتقالي
                     .stroke(Color.orange, lineWidth: task.isCompleted ? 0 : 2) // Adds the border for incomplete tasks
             )
         }
@@ -274,7 +284,7 @@ struct Task: Identifiable, Codable {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         PerCheck()
-            .previewDevice("iPhone 15 Pro") // Simulate iPhone 15 Pro preview
+           
     }
 }
 
