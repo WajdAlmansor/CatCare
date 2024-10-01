@@ -8,6 +8,7 @@ struct PerCheck: View {
         Task(time: "3:15 PM", name: "Water", isCompleted: false, frequency: "Daily"),
         Task(time: "10:00 PM", name: "LitterBox", isCompleted: false, frequency: "Weekly")
     ]
+    //Here
     
     @State private var isEditing = false
 
@@ -96,21 +97,22 @@ struct PerCheck: View {
                         
                         // Main content with white rectangle background
                         VStack {
-                            VStack(alignment: .leading, spacing: -20) {
-                                ForEach($tasks) { $task in
-                                    TaskView(task: $task, tasks: $tasks)
+                            
+                                VStack(alignment: .leading, spacing: -20) {
+                                    ForEach($tasks) { $task in
+                                        TaskView(task: $task, tasks: $tasks)
+                                    }
                                 }
+                                .padding()
+                                .background(Color.white)
+                                //.frame(height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
+                                .cornerRadius(45)
+                                .shadow(radius: 1)
+                                .frame(maxHeight: .infinity)
+                                .position(x: 180, y: 230)
                             }
-                            .padding()
-                            .background(Color.white)
-                            //.frame(height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
-                            .cornerRadius(45)
-                            .shadow(radius: 1)
-                            .frame(maxHeight: .infinity)
-                            .position(x: 180, y: 230)
-                        }
                         .padding(.horizontal)
-                        .edgesIgnoringSafeArea(.bottom)
+                        //.edgesIgnoringSafeArea(.bottom)
                     }
                 }
             }
