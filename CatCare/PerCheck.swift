@@ -114,14 +114,31 @@ struct PerCheck: View {
     
     
     //استدعيناهم داخل الNavigationView
+//    var header: some View {
+//        VStack(alignment: .leading) {
+//            Text("October").font(.system(size: 20)).foregroundColor(.gray).padding(.leading, -160)
+//            Text("Today reminders").font(.title).fontWeight(.light).padding(.leading, -160)
+//        }
+//        .padding()
+//    }
+    
+    
+    //استدعيناهم داخل الNavigationView
+    //المفروض يتحدث اسم الشهر على الشهر الي عند كالندر اليوزر
     var header: some View {
         VStack(alignment: .leading) {
-            Text("October").font(.system(size: 20)).foregroundColor(.gray).padding(.leading, -160)
+            Text(currentMonth).font(.system(size: 20)).foregroundColor(.gray).padding(.leading, -160)
             Text("Today reminders").font(.title).fontWeight(.light).padding(.leading, -160)
         }
         .padding()
     }
-    
+
+    var currentMonth: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM" // Full month name (e.g., "October")
+        return dateFormatter.string(from: Date()) // Returns the current month's name
+    }
+
     
     
     
@@ -203,7 +220,13 @@ struct PerCheck: View {
     //استدعيناه فوق مع اجزاء البار
     var navBarLeading: some View {
         HStack {
-            Image(systemName: "chevron.left")
+            //يخلي زر الرجوع يرجع للهوم
+            NavigationLink(destination: CareOverView()) {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.black)
+                    }
+
+            
             Image(systemName: "pawprint.fill")
                 .resizable()
                 .frame(width: 40, height: 40)
