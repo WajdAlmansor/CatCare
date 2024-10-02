@@ -6,8 +6,8 @@ struct CatNeedsView: View {
             
             // Header Section
             VStack(alignment: .leading, spacing: 8) {
-             Spacer()
-                               Text("Schedule")
+                Spacer()
+                Text("Schedule")
                     .font(.system(size: 34, weight: .bold))
                     .foregroundColor(Color.orange)
                 
@@ -19,18 +19,12 @@ struct CatNeedsView: View {
             .padding(.leading)
             
             // Background abstract shape
-            
             ZStack {
                 Image("orange normal")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 500, height: 10011)
-                .position(x: 200, y: 350)
-                
-                /*RoundedRectangle(cornerRadius: 50)
-                    .fill(Color.orange.opacity(0.3))
-                    .frame(width: 33, height: 120)
-                    .offset(x: 100, y: -40)*/
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 500, height: 10011)
+                    .position(x: 200, y: 350)
             }
             .frame(maxWidth: .infinity, alignment: .topTrailing)
             
@@ -96,13 +90,15 @@ struct CatNeedsView: View {
                 
             }
             .background(
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: 30)
                     .fill(Color.white)
                     .shadow(radius: 5)
+                    // Increase the size of the RoundedRectangle
+                    .frame(height: 400)
             )
             .padding(.horizontal, 20)
             .frame(maxWidth: .infinity)
-            .offset(y:-60)
+            .offset(y: -80) // Adjusted to move up a little bit
             
             // Done Button
             Button(action: {}) {
@@ -114,11 +110,12 @@ struct CatNeedsView: View {
                     .background(Color.orange)
                     .cornerRadius(25)
             }
-            .padding(.horizontal, 80)
+            .padding(.horizontal, 90)
+            // Move the "Done" button higher
+            .offset(y: -50)
             
             Spacer()
         }
-       
         .background(Color(UIColor.systemGray6))
         .edgesIgnoringSafeArea(.all) // Ensures the background stretches edge to edge
     }
@@ -161,3 +158,4 @@ struct CatNeedsView_Previews: PreviewProvider {
         CatNeedsView()
     }
 }
+
