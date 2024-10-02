@@ -55,7 +55,7 @@ struct PerCheck: View {
     
     //All what is showing in the screen
     var body: some View {
-        NavigationView {
+      //  NavigationView {
             ZStack {
                 Color("backgroundGray").ignoresSafeArea()
                 
@@ -98,7 +98,7 @@ struct PerCheck: View {
                 SetSchedule()
                 //SetSchedule(isEditing:$isEditing)
             }
-        }
+       // }
     }
     
     
@@ -222,8 +222,8 @@ struct PerCheck: View {
         HStack {
             //يخلي زر الرجوع يرجع للهوم
             NavigationLink(destination: CareOverView()) {
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(.black)
+//                        Image(systemName: "chevron.left")
+//                            .foregroundColor(.black)
                     }
 
             
