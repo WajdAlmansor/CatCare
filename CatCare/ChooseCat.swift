@@ -1,93 +1,107 @@
 import SwiftUI
 
 struct ChooseCat: View {
-    @State private var catName: String = ""
-
+    // Cat image names from assets
+    let catImages = ["cat1", "cat2", "cat3", "cat4"]  // Add your actual cat image names here
+    
+    // State variables
+    @State private var currentIndex = 0  // To keep track of the currently displayed cat image
+    @State private var catName = ""  // To store the cat's name input by the user
+    
     var body: some View {
         ZStack {
             // Background image
-            Image("orange normal") // The background image you saved in Assets
+            Image("orange normal")  // Use the background image from assets
                 .resizable()
-                .edgesIgnoringSafeArea(.all)
-                .scaledToFill()
-
+                .edgesIgnoringSafeArea(.all)  // Makes the background fill the whole screen
+            
             VStack {
+                // Title text
+                
+                HStack{
+                    Text("Choose your")
+                        .font(.title)
+                        .fontWeight(.medium)
+                        .padding(.top, 50)
+                    Text("cat")
+                        .font(.title)
+                        .fontWeight(.medium)
+                        .padding(.top, 50)
+                        .foregroundColor(.orange)
+                }
+                //Text("Choose your")
+                   // .font(.title)
+                   // .fontWeight(.medium)
+                  //  .padding(.top, 50)
+                
                 Spacer()
-
-                // Title: Choose your cat
-                Text("Choose your")
-                    .font(.title)
-                    .fontWeight(.medium)
-                    .foregroundColor(.black) +
-                Text(" cat")
-                    .font(.title)
-                    .fontWeight(.medium)
-                    .foregroundColor(.orange)
-
-                Spacer()
-
-                // Cat image with left and right arrows
+                    
+                // Image slider for the cats with left and right arrows
                 HStack {
+                    // Left arrow
                     Button(action: {
-                        // Action for previous cat
+                        if currentIndex > 0 {
+                            currentIndex -= 1
+                        }
                     }) {
                         Image(systemName: "chevron.left")
                             .font(.largeTitle)
-                            .foregroundColor(.gray)
+                            .padding()
                     }
-
-                    Spacer()
-
-                    Image("catImage") // Replace with your cat image asset
+                    .disabled(currentIndex == 0)  // Disable if already on the first cat
+                    
+                    // Cat image
+                    Image(catImages[currentIndex])
                         .resizable()
                         .scaledToFit()
                         .frame(width: 150, height: 150)
-
-                    Spacer()
-
+                    
+                    // Right arrow
                     Button(action: {
-                        // Action for next cat
+                        if currentIndex < catImages.count - 1 {
+                            currentIndex += 1
+                        }
                     }) {
                         Image(systemName: "chevron.right")
                             .font(.largeTitle)
-                            .foregroundColor(.gray)
+                            .padding()
                     }
+                    .disabled(currentIndex == catImages.count - 1)  // Disable if already on the last cat
                 }
-                .padding(.horizontal, 40)
-
+                
                 Spacer()
-
-                // Cat name text field
-                Text("What’s your cat name?")
-                    .font(.headline)
-
+                
+                // Text field for the user to enter the cat's name
                 TextField("Enter cat name", text: $catName)
                     .padding()
-                    .background(Color(UIColor.systemGray5))
+                    .background(Color(.systemGray6))
                     .cornerRadius(10)
-                    .frame(width: 300)
-
+                    .padding(.horizontal, 40)
+                    .padding(.bottom, 20)
+                
                 // Next button
                 Button(action: {
-                    // Next action
+                    // Add your action for the next button here
+                    print("Selected cat name: \(catName)")
                 }) {
                     Text("Next")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(width: 150, height: 50)
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity)
+                        .padding()
                         .background(Color.orange)
-                        .cornerRadius(25)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding(.horizontal, 40)
                 }
-                .padding(.top, 20)
-
+                
                 Spacer()
             }
-            .padding()
+          
         }
     }
 }
 
-struct CatSelectionView_Previews: PreviewProvider {
+struct CatSelectionView_previews: PreviewProvider {
     static var previews: some View {
        ChooseCat()
     }
