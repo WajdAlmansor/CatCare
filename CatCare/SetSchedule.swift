@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct CatNeedsView: View {
+struct SetSchedule: View {
     var body: some View {
         VStack(spacing: 20) {
             
@@ -155,7 +155,7 @@ struct TimeView: View {
 
 struct CatNeedsView_Previews: PreviewProvider {
     static var previews: some View {
-        CatNeedsView()
+        SetSchedule()
     }
 }
 
