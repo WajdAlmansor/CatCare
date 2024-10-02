@@ -12,7 +12,7 @@ struct CareOverView: View {
     var body: some View {
         
         ZStack{
-           
+            
     Image("orange normal")
     .resizable()
     .scaledToFit()
@@ -32,6 +32,13 @@ struct CareOverView: View {
         RoundedRectangle(cornerRadius: 20)
         .fill(Color.customOrange)
         .frame(width: 144, height: 170)
+        .overlay(
+         Image("catImage")
+         .resizable()
+           .scaledToFit()
+           .frame(width: 100, height: 100)
+           .padding()
+                            )
         
         
         RoundedRectangle(cornerRadius: 20)
@@ -45,45 +52,81 @@ struct CareOverView: View {
           .offset(x:-50,y:-10)
           .foregroundColor(.white)
           //.font(.system(size: 15))
-                                    
-      Text("Food")
-       .font(.headline)
-  .foregroundColor(.black)
-    .frame(maxWidth: .infinity, alignment: .leading)
+      HStack {
+  Text("Food")
+ .font(.headline)
+.foregroundColor(.black)
+ .frame(maxWidth: .infinity, alignment: .leading)
  .padding(.leading, 15)
+  HStack(spacing: 5) {
+ Image(systemName: "pawprint.fill")
+ .foregroundColor(.black)
+ Image(systemName: "pawprint.fill")
+ .foregroundColor(.black)
+   }
+ .frame(maxWidth: .infinity, alignment: .center)
+  }
+  .padding(.top, 5)
 
-                                           
-                
-                       
-                
  Rectangle()
 .fill(Color.white)
 .frame(width: 200, height: 2)
-
- Text("Water")
+      HStack {
+   Text("Water")
    .font(.headline)
+ .foregroundColor(.black)
+.frame(maxWidth: .infinity, alignment: .leading)
+ .padding(.leading, 15)
+ HStack(spacing: 5) {
+  Image(systemName: "pawprint.fill")
   .foregroundColor(.black)
-  .frame(maxWidth: .infinity, alignment: .leading)
-    .padding(.leading, 15)
+  }
+   .frame(maxWidth: .infinity, alignment: .center)
+}
+  .padding(.top, 5)
+
                 
 Rectangle()
 .fill(Color.white)
 .frame(width: 200, height: 2)
                                        
                                     
-Text("Literbox")
-  .font(.headline)
- .foregroundColor(.black)
-  .frame(maxWidth: .infinity, alignment: .leading)
-   .padding(.leading, 15)
-}
-    .padding(.top, 15)
-  )
+      HStack {
+     Text("Literbox")
+    .font(.headline)
+.foregroundColor(.black)
+.frame(maxWidth: .infinity, alignment: .leading)
+ .padding(.leading, 15)
+ 
+Image(systemName: "pawprint")
+.foregroundColor(.black)
+
+ .frame(maxWidth: .infinity, alignment: .center)
+   }
+  .padding(.top, 5)
+ }
+.padding(.top, 15)
+ )
                 
-                       }
+  }
             
       .padding(.top, 150)
       .position(x: 200, y: 150)
+            VStack {
+         HStack {
+   Spacer()
+  Image(systemName: "plus")
+   .resizable()
+    .scaledToFit()
+    .frame(width: 30, height: 30)
+     .foregroundColor(.black)
+      .padding()
+    .onTapGesture {
+  print("Plus symbol tapped")
+                }
+                }
+           Spacer()
+                    }
         }
        
     }
