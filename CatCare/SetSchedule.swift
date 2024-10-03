@@ -22,14 +22,23 @@ struct SetSchedule: View {
             // Header Section
             VStack(alignment: .leading, spacing: 8) {
                 Spacer()
-                Text("Schedule")
-                    .font(.system(size: 34, weight: .bold))
-                    .foregroundColor(Color.orange)
+                VStack(){
+                    
+                    
+                        Text("Schedule")
+                        .offset(y:30)
+                        .font(.system(size: 34, weight: .bold))
+                        .foregroundColor(Color.orange)
+                      
+                    Text("your cat needs")
+                        .offset(x:-11,y:30)
+                        .font(.system(size: 18))
+                        .foregroundColor(.black)
 
-                Text("your cat needs")
-                    .font(.system(size: 18))
-                    .foregroundColor(.black)
+                }
+                
             }
+            
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading)
 
@@ -122,7 +131,7 @@ struct SetSchedule: View {
                         .font(.headline)
                         .foregroundColor(.black)
                         .padding(.top,-30)
-                    
+                        
 
                     Spacer()
                     
