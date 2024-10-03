@@ -13,7 +13,8 @@ struct CatCareApp: App {
         WindowGroup {
             //ContentView()
             //PerCheck()
-            CareOverView()
+//            CareOverView()
+            ChooseCat()
         }
     }
 }

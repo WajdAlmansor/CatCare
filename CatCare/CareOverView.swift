@@ -12,72 +12,76 @@ struct CareOverView: View {
     @State private var isSecondFoodPawFilled = false
     @State private var isWaterPawFilled = false
     @State private var isLitterboxPawFilled = false
-
+// for data swift
+    @State private var savedCatName: String = ""
+    @State private var savedCatImageIndex: Int = 0
+    //cat images just like in chose cat
+    let catImages = ["cat1", "cat2", "cat3", "cat4"]
+    
     var body: some View {
+        
         NavigationStack{
+            
             ZStack{
                 
-                Image("orange normal")
+ //background
+        Image("orange normal")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 500, height: 900)
                     .position(x: 200, y: 350)
-                
-                
-                
-                
+    //text
                 Text(makeAttributedText())
                     .font(.custom("SF Pro Regular", size: 28))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding()   .position(x: 100, y: 104)
                 
                 
-                HStack(spacing: 30) {
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(Color.customOrange)
-                        .frame(width: 144, height: 170)
-                    
-                    //
-                        .overlay(
-                            NavigationLink(destination: PerCheck()){
-                                Image("cat1")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 100, height: 100)
-                                .padding()})
-                    
-                    
-                    RoundedRectangle(cornerRadius: 20)
+    HStack(spacing: 30) {
+   RoundedRectangle(cornerRadius: 20)
+  .fill(Color.customOrange)
+  .frame(width: 144, height: 170)
+
+  .overlay(
+  NavigationLink(destination: PerCheck()){
+      Image(catImages[savedCatImageIndex])
+  .resizable()
+ .scaledToFit()
+.frame(width: 100, height: 100)
+.padding()
+    }
+     )
+
+    RoundedRectangle(cornerRadius: 20)
                         .fill(Color.customOrange)
                         .frame(width: 200, height: 170)
                         .overlay(
                             
                             
-                            VStack( spacing:5) {
-                                Text("CatName")
-                                    .offset(x:-50,y:-10)
-                                    .foregroundColor(.black)
-                                //.font(.system(size: 15))
-                                HStack {
-                                    Text("Food")
-                                        .font(.headline)
-                                        .foregroundColor(.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .padding(.leading, 15)
-                                    
-                                    HStack(spacing: 5) {
+            VStack( spacing:5) {
+    Text(savedCatName)
+   .offset(x: -50, y: -10)
+ .foregroundColor(.black)
+  
+            HStack {
+        Text("Food")
+         .font(.headline)
+        .foregroundColor(.black)
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .padding(.leading, 15)
+                
+        HStack(spacing: 5) {
                                         
-                                        Image(systemName: isFirstFoodPawFilled ? "pawprint.fill" : "pawprint")
-                                            .foregroundColor(.black)
-                                            .onTapGesture {
-                                                isFirstFoodPawFilled.toggle()
-                                            }
-                                        Image(systemName: isSecondFoodPawFilled ? "pawprint.fill" : "pawprint")
-                                            .foregroundColor(.black)
-                                            .onTapGesture {
-                                                
-                                                if isFirstFoodPawFilled {
-                                                    isSecondFoodPawFilled.toggle()//this makes sure you cant click the sceonde paw if the first one isnt clicked
+        Image(systemName: isFirstFoodPawFilled ? "pawprint.fill" : "pawprint")
+.foregroundColor(.black)
+     .onTapGesture {
+  isFirstFoodPawFilled.toggle()
+    }
+Image(systemName: isSecondFoodPawFilled ? "pawprint.fill" : "pawprint")
+ .foregroundColor(.black)
+.onTapGesture {
+  if isFirstFoodPawFilled {
+isSecondFoodPawFilled.toggle()//this makes sure you cant click the sceonde paw if the first one isnt clicked
                                                 }
                                             }
                                             .opacity(isFirstFoodPawFilled ? 1.0 : 0.5) //this makes the seconde paw gray if not clicked on the first
@@ -152,11 +156,18 @@ struct CareOverView: View {
                                 print("Plus symbol tapped")
                             }
                     }
-                    Spacer()
-                }
+        Spacer()
+    }
                 
             }
-          
+  .onAppear {
+      
+// Retrieve saved cat name and image index from UserDefaults
+   if let name = UserDefaults.standard.string(forKey: "savedCatName") {
+    savedCatName = name
+    }
+   savedCatImageIndex = UserDefaults.standard.integer(forKey: "savedCatImageIndex")
+                       }
         }}
 
 func makeAttributedText() -> AttributedString {

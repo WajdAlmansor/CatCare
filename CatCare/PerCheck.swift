@@ -95,7 +95,7 @@ struct PerCheck: View {
             
             //what inside the edit button
             .sheet(isPresented: $isEditing) {
-                SetSchedule(Utasks: $Utasks)
+                SetSchedule()
                 //SetSchedule(isEditing:$isEditing)
             }
        // }
