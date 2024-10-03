@@ -12,7 +12,8 @@ struct CatCareApp: App {
     var body: some Scene {
         WindowGroup {
             //ContentView()
-            PerCheck()
+            //PerCheck()
+            CareOverView()
         }
     }
 }

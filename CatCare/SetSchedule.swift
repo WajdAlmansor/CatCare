@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct SetSchedule: View {
+    @Binding var Utasks: [Task] 
     @State private var wakeUp = Date.now
     @State private var vaccinationDate = Date.now
 
@@ -195,8 +196,9 @@ struct TimeView: View {
 }
 
 struct CatNeedsView_Previews: PreviewProvider {
+    @State static var mockTasks: [Task] = []
     static var previews: some View {
-        SetSchedule()
+        SetSchedule(Utasks: $mockTasks)
     }
 }
 
