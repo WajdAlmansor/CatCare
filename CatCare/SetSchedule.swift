@@ -49,8 +49,9 @@ struct SetSchedule: View {
                 // Food Section
                 HStack {
                     Text("Food")
-                        .font(.headline)
-                        .foregroundColor(.black)
+        .font(.headline)
+    .foregroundColor(.black)
+    .padding(.top,50)
 
                     Spacer()
 
@@ -74,7 +75,7 @@ struct SetSchedule: View {
                     Text("Water")
                         .font(.headline)
                         .foregroundColor(.black)
-
+                       
                     Spacer()
 
                     // Picker for water frequency
@@ -120,12 +121,16 @@ struct SetSchedule: View {
                     Text("Vaccination")
                         .font(.headline)
                         .foregroundColor(.black)
+                        .padding(.top,-30)
+                    
 
                     Spacer()
+                    
 
                     // Small DatePicker with no labels
-                    DatePicker("", selection: $vaccinationDate, displayedComponents: .date)
-                        .datePickerStyle(CompactDatePickerStyle()) // Makes it small and compact
+DatePicker("", selection: $vaccinationDate, displayedComponents: .date)
+    .datePickerStyle(CompactDatePickerStyle())
+    .padding(.top,-35)// Makes it small and compact
                         .labelsHidden() // Hides any labels
                         .frame(width: 100) // Adjust width of the compact view
                 }
@@ -194,3 +199,4 @@ struct CatNeedsView_Previews: PreviewProvider {
         SetSchedule()
     }
 }
+
