@@ -40,7 +40,7 @@ struct CareOverView: View {
                     //
                         .overlay(
                             NavigationLink(destination: PerCheck()){
-                                Image("catImage")
+                                Image("cat1")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 100, height: 100)
