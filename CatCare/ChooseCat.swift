@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ChooseCat: View {
     // Cat image names from assets
-    let catImages = ["cat1", "cat2", "cat3", "cat4"]  // Add your actual cat image names here
+    let catImages = ["cat1", "cat2", "cat3", "cat4","cat5"]  // Add your actual cat image names here
     
     // State variables
     @State private var currentIndex = 0  // To keep track of the currently displayed cat image
@@ -81,6 +81,7 @@ struct ChooseCat: View {
                         .padding(.bottom, 20)
                     
                     // Next button
+                    
                     Button(action: {
                         // Add your action for the next button here
                         UserDefaults.standard.set(catName,forKey: "savedCatName")
@@ -106,8 +107,7 @@ struct ChooseCat: View {
                 
             }
         }
-    }
-}
+    }}
 
 struct CatSelectionView_previews: PreviewProvider {
     static var previews: some View {

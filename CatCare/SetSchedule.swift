@@ -202,8 +202,9 @@ struct TimeView: View {
 }
 
 struct CatNeedsView_Previews: PreviewProvider {
-    @State static var mockTasks: [Task] = []
     static var previews: some View {
         SetSchedule()
     }
 }
+
+
