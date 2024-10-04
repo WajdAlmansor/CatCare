@@ -5,16 +5,7 @@ struct PerCheck: View {
     
     
     //Array example tasks
-    @State private var Utasks: [Task] = [
-        Task(time: "6:00 AM", name: "Feed", isCompleted: true, frequency: "Daily"),
-        Task(time: "1:00 PM", name: "Feed", isCompleted: false, frequency: "Daily"),
-        Task(time: "3:15 PM", name: "Water", isCompleted: false, frequency: "Daily"),
-        Task(time: "10:00 PM", name: "LitterBox", isCompleted: false, frequency: "Weekly"),
-        Task(time: "12:00 PM", name: "Feed", isCompleted: false, frequency: "Weekly"),
-        Task(time: "12:30 PM", name: "Water", isCompleted: false, frequency: "Weekly"),
-        Task(time: "12:35 PM", name: "feed", isCompleted: false, frequency: "Weekly"),
-        Task(time: "12:36 PM", name: "feed", isCompleted: false, frequency: "Weekly")
-    ]
+    @State private var Utasks: [Task] = []
     
     
     
@@ -49,9 +40,14 @@ struct PerCheck: View {
     
     
     
+//    func getSavedCatName() -> String {
+//        return UserDefaults.standard.string(forKey: "savedCatName") ?? "Unknown Cat"
+//    }
+
+    @AppStorage("catName") private var catName: String = ""
     
-    
-    
+   // @AppStorage("selectedImageIndex") private var selectedImageIndex: Int = 0
+        //let catImages = ["cat1", "cat2", "cat3", "cat4","cat5"]
     
     //All what is showing in the screen
     var body: some View {
@@ -90,14 +86,23 @@ struct PerCheck: View {
             )
             
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear { //loadTasks()
-            }
-            
-            //what inside the edit button
-            .sheet(isPresented: $isEditing) {
-                SetSchedule()
-                //SetSchedule(isEditing:$isEditing)
-            }
+           //what inside the edit button
+            .sheet(isPresented: $isEditing)
+        {
+           SetSchedule(onSave: { newTasks in
+               Utasks.append(contentsOf: newTasks)
+               isEditing = false // Dismiss the sheet
+           })
+       }
+        //{
+                //SetSchedule()
+//                SetSchedule(onSave: { newTasks in
+//                                // Append new tasks to the array
+//                                Utasks.append(contentsOf: newTasks)
+//                                isEditing = false // Dismiss the sheet
+//                            })
+//
+//            }
        // }
     }
     
@@ -198,9 +203,22 @@ struct PerCheck: View {
         //سوينا سكرول للتساكز
         ScrollView {
             VStack(alignment: .leading, spacing: 10) {
-                ForEach($Utasks) { $task in
-                    TaskView(task: $task, tasks: $Utasks)
-                }
+                ForEach($Utasks.filter { taskBinding  in
+                    let task = taskBinding.wrappedValue
+                    if task.isCompleted {
+                    // Safely unwrap completionDate
+                    if let completionDate = task.completionDate {
+            return Date().timeIntervalSince(completionDate) <= 86400 // 24 hours in seconds
+                                       }
+                                       return false // If completionDate is nil, don't include the task
+                                   }
+                                   return true // Include incomplete tasks
+                               }) { $task in
+                                   TaskView(task: $task, tasks: $Utasks)
+                               }
+//                ForEach($Utasks) { $task in
+//                    TaskView(task: $task, tasks: $Utasks)
+//                }
             }}
             .padding()
             
@@ -231,7 +249,13 @@ struct PerCheck: View {
                 .resizable()
                 .frame(width: 40, height: 40)
                 .clipShape(Circle())
-            Text("CatName").font(.title)
+            
+            //Text("CatName")
+            Text(catName.isEmpty ? "CatName" : catName)
+                .font(.title)
+//            Text("\(getSavedCatName())!")
+                        .font(.largeTitle)
+                        .padding()
         }
     }
     
@@ -338,6 +362,11 @@ struct TaskView: View {
                         .foregroundColor(.orange)
                         .onTapGesture {
                             task.isCompleted.toggle()
+                            if task.isCompleted {
+                                        task.completionDate = Date() // Store the completion date
+                                    } else {
+                                        task.completionDate = nil // Reset if unchecked
+                                    }
                             saveTasks()
                         }
                 }
@@ -408,6 +437,7 @@ struct Task: Identifiable, Codable {
     var name: String
     var isCompleted: Bool
     var frequency: String
+    var completionDate: Date? // New property to store completion date
 }
 
 struct ContentView_Previews: PreviewProvider {

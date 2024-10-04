@@ -6,8 +6,17 @@ struct ChooseCat: View {
     
     // State variables
     @State private var currentIndex = 0  // To keep track of the currently displayed cat image
-    @State private var catName = ""  // To store the cat's name input by the user
+    //@State private var catName = ""  // To store the cat's name input by the user
     
+//    func getSavedCatName() -> String {
+//        return UserDefaults.standard.string(forKey: "savedCatName") ?? "Unknown Cat"
+//    }
+    // Use @AppStorage to persistently store the cat name
+    @AppStorage("catName") private var catName: String = ""
+    
+    // AppStorage to persist the selected image index
+    //@AppStorage("selectedImageIndex") private var selectedImageIndex: Int = 0
+
     var body: some View {
         NavigationStack{
             ZStack {
@@ -52,8 +61,7 @@ struct ChooseCat: View {
                         .disabled(currentIndex == 0)  // Disable if already on the first cat
                         
                         // Cat image
-                        Image(catImages[currentIndex])
-                            .resizable()
+                        Image(catImages[currentIndex])                            .resizable()
                             .scaledToFit()
                             .frame(width: 150, height: 150)
                         
@@ -72,26 +80,36 @@ struct ChooseCat: View {
                     
                     Spacer()
                     
-                    // Text field for the user to enter the cat's name
-                    TextField("Enter cat name", text: $catName)
-                        .padding()
-                        .background(Color(.systemGray6))
-                        .cornerRadius(10)
-                        .padding(.horizontal, 40)
-                        .padding(.bottom, 20)
+                  
+
+                    //@State var currentCatName: String?
+                        // Text field for the user to enter the cat's name
+                   // TextField(text: currentCatName ?? "name")
+                        TextField("Enter cat name", text: $catName)
+                            .padding()
+                            .background(Color(.systemGray6))
+                            .cornerRadius(10)
+                            .padding(.horizontal, 40)
+                            .padding(.bottom, 20)
                     
                     // Next button
                     
                     Button(action: {
+                        //currentCatName = "catName"
+                        
+                        //USERDEAFULT
+                        //UserDefaults.standard.set(catName, forKey: "savedCatName")
                         // Add your action for the next button here
-                        UserDefaults.standard.set(catName,forKey: "savedCatName")
-                        UserDefaults.standard.set(currentIndex, forKey: "savedCatImageIndex")
-                        print("Selected cat name: \(catName), Image index: \(currentIndex)")
-                        print("Selected cat name: \(catName)")
+                        //UserDefaults.standard.set(catName,forKey: "savedCatName")
+                        //UserDefaults.standard.set(currentIndex, forKey: "savedCatImageIndex")
+                        //print("Selected cat name: \(catName), Image index: \(currentIndex)")
+                       // print("Selected cat name: \(catName)")
                     }) {
+                        
                         
                         NavigationLink(destination: SetSchedule()){
                             Text("Next")
+                            
                                 .fontWeight(.bold)
                                 .frame(maxWidth: .infinity)
                                 .padding()
