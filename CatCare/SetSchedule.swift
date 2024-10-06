@@ -10,6 +10,7 @@ struct SetSchedule: View {
         case daily = "Daily"
         case weekly = "Weekly"
         case monthly = "Monthly"
+
     }
     
     // State to track selected frequency for each item
@@ -60,6 +61,7 @@ struct SetSchedule: View {
                         Text("Food")
                             .font(.headline)
                             .foregroundColor(.black)
+                            .padding(.leading,3)
                         
                         Spacer()
                         
@@ -83,6 +85,7 @@ struct SetSchedule: View {
                         Text("Water")
                             .font(.headline)
                             .foregroundColor(.black)
+                        
                         
                         Spacer()
                         
@@ -129,12 +132,18 @@ struct SetSchedule: View {
                         Text("Appointment")
                             .font(.headline)
                             .foregroundColor(.black)
+                            .padding(.leading, 4) 
+                            .padding(.top, -25.0)
+                        
+                        // Adjust this value to move the text more to the right
+                       
                         
                         Spacer()
                         
                         // Small DatePicker with no labels
                         DatePicker("", selection: $vaccinationDate, displayedComponents: .date)
                             .datePickerStyle(CompactDatePickerStyle()) // Makes it small and compact
+                            .padding(.top, -25.0)
                             .labelsHidden() // Hides any labels
                             .frame(width: 100) // Adjust width of the compact view
                     }
