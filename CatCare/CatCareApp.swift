@@ -6,15 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct CatCareApp: App {
     var body: some Scene {
         WindowGroup {
-            //ContentView()
-            //PerCheck()
-//            CareOverView()
-            ChooseCat()
+            ContentView()
         }
+       
     }
 }

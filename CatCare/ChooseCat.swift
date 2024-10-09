@@ -1,54 +1,40 @@
 import SwiftUI
 
 struct ChooseCat: View {
-    // Cat image names from assets
-    let catImages = ["cat1", "cat2", "cat3", "cat4","cat5"]  // Add your actual cat image names here
+    // List of cat images
+    let catImages = ["cat1", "cat2", "cat3", "cat4", "cat5"]
     
     // State variables
-    @State private var currentIndex = 0  // To keep track of the currently displayed cat image
-    //@State private var catName = ""  // To store the cat's name input by the user
+    @State private var currentIndex = 0 // Track the current image index
+    @AppStorage("catName") private var catName: String = "" // Store cat name in UserDefaults
     
-//    func getSavedCatName() -> String {
-//        return UserDefaults.standard.string(forKey: "savedCatName") ?? "Unknown Cat"
-//    }
-    // Use @AppStorage to persistently store the cat name
-    @AppStorage("catName") private var catName: String = ""
-    
-    // AppStorage to persist the selected image index
-    //@AppStorage("selectedImageIndex") private var selectedImageIndex: Int = 0
-
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             ZStack {
                 // Background image
-                Image("orange normal")  // Use the background image from assets
+                Image("orange normal")
                     .resizable()
-                    .edgesIgnoringSafeArea(.all)  // Makes the background fill the whole screen
+                    .edgesIgnoringSafeArea(.all)
                 
                 VStack {
-                    // Title text
-                    
-                    HStack{
+                    // Title section
+                    HStack {
                         Text("Choose your")
                             .font(.title)
                             .fontWeight(.medium)
-                            .padding(.top, 50)
+                            .padding(.top, 100)
                         Text("cat")
                             .font(.title)
                             .fontWeight(.medium)
-                            .padding(.top, 50)
+                            .padding(.top, 100)
                             .foregroundColor(.orange)
                     }
-                    //Text("Choose your")
-                    // .font(.title)
-                    // .fontWeight(.medium)
-                    //  .padding(.top, 50)
                     
-                    Spacer()
+                    Spacer() // Add space between title and image slider
                     
-                    // Image slider for the cats with left and right arrows
+                    // Image slider section
                     HStack {
-                        // Left arrow
+                        // Left button to navigate through images
                         Button(action: {
                             if currentIndex > 0 {
                                 currentIndex -= 1
@@ -58,14 +44,15 @@ struct ChooseCat: View {
                                 .font(.largeTitle)
                                 .padding()
                         }
-                        .disabled(currentIndex == 0)  // Disable if already on the first cat
+                        .disabled(currentIndex == 0) // Disable if at the first image
                         
-                        // Cat image
-                        Image(catImages[currentIndex])                            .resizable()
+                        // Display the current cat image
+                        Image(catImages[currentIndex])
+                            .resizable()
                             .scaledToFit()
                             .frame(width: 150, height: 150)
                         
-                        // Right arrow
+                        // Right button to navigate through images
                         Button(action: {
                             if currentIndex < catImages.count - 1 {
                                 currentIndex += 1
@@ -75,60 +62,42 @@ struct ChooseCat: View {
                                 .font(.largeTitle)
                                 .padding()
                         }
-                        .disabled(currentIndex == catImages.count - 1)  // Disable if already on the last cat
+                        .disabled(currentIndex == catImages.count - 1) // Disable if at the last image
                     }
                     
-                    Spacer()
+                    Spacer() // Add space between the image slider and the text field
                     
-                  
-
-                    //@State var currentCatName: String?
-                        // Text field for the user to enter the cat's name
-                   // TextField(text: currentCatName ?? "name")
-                        TextField("Enter cat name", text: $catName)
+                    // Cat name input field
+                    TextField("Enter cat name", text: $catName)
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+                        .padding(.horizontal, 40)
+                        .padding(.bottom, 20)
+                    
+                    // Next button to navigate to CareOverView
+                    NavigationLink(destination: CareOverView(selectedImageIndex: currentIndex)) {
+                        Text("Next")
+                            .font(.headline)
+                            .foregroundColor(.white)
                             .padding()
-                            .background(Color(.systemGray6))
-                            .cornerRadius(10)
-                            .padding(.horizontal, 40)
-                            .padding(.bottom, 20)
+                            .frame(maxWidth: .infinity)
+                            .background(Color.orange)
+                            .cornerRadius(25)
+                            .padding(.horizontal, 90)
+                            .offset(y: -10)
+                    }
+                    .disabled(catName.isEmpty) // Disable button if no cat name is entered
                     
-                    // Next button
-                    
-                    Button(action: {
-                        //currentCatName = "catName"
-                        
-                        //USERDEAFULT
-                        //UserDefaults.standard.set(catName, forKey: "savedCatName")
-                        // Add your action for the next button here
-                        //UserDefaults.standard.set(catName,forKey: "savedCatName")
-                        //UserDefaults.standard.set(currentIndex, forKey: "savedCatImageIndex")
-                        //print("Selected cat name: \(catName), Image index: \(currentIndex)")
-                       // print("Selected cat name: \(catName)")
-                    }) {
-                        
-                        
-                        NavigationLink(destination: SetSchedule()){
-                            Text("Next")
-                            
-                                .fontWeight(.bold)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(Color.orange)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                                .padding(.horizontal, 40)
-                            
-                        }}
-                    .disabled(catName.isEmpty)
-                    Spacer()
+                    Spacer() // Add space at the bottom
                 }
-                
             }
         }
-    }}
+    }
+}
 
-struct CatSelectionView_previews: PreviewProvider {
+struct CatSelectionView_Previews: PreviewProvider {
     static var previews: some View {
-       ChooseCat()
+        ChooseCat()
     }
 }
