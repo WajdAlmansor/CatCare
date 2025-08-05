@@ -38,3 +38,8 @@ I built it as a way to learn SwiftUI, @AppStorage, navigation, and building UI l
 1. Clone this repo:
    ```bash
    git clone https://github.com/WajdAlmansor/CatCare.git
+2. Open the project folder in Xcode:
+   ```bash
+   cd CatCare
+   open CatCare.xcodeproj
+
